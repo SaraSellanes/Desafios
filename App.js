@@ -1,20 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {ActivityIndicator} from 'react-native'
+import CategoriesScreen from './src/screens/CategoriesScreen'
+import ProductsByCategoryScreen from './src/screens/ProductsByCategoryScreen'
+import { useFonts } from 'expo-font'
+import { useState} from 'react'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Hola, Coder!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+ const [categorySelected, setCategorySelected] = useState('')
+
+console.log("Categoria seleccionada:", categorySelected)
+
+const [fontLoaded] = useFonts({
+  'Rubik-Regular': require ('./assets/fonts/Rubik-Regular.ttf'),
+  'Rubik-Bold': require ('./assets/fonts/Rubik-Bold.ttf'),
+})
+
+  if (!fontLoaded) return <ActivityIndicator/>
+
+const onSelectCategory = (category) => {
+   setCategorySelected(category)
+}
+const onReturnHome =()=>{
+  setCategorySelected("")
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (
+    <>
+    {
+      categorySelected
+      ?
+      <ProductsByCategoryScreen category={categorySelected} returnHomeHandlerEvent={onReturnHome}/>
+      :
+      <CategoriesScreen onSelectCategoryEvent={onSelectCategory}/>
+     }
+    </>
+  );
+}

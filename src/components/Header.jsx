@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         paddingBottom:10,
     },
 headerTitle:{
-       color:'#fff',
+       color:colors.grey,
        fontFamily: 'Rubik-Regular'
     }
 })
